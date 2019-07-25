@@ -34,8 +34,7 @@ namespace eCommerce.Controllers
             if (ModelState.IsValid)
             {
                 // Add to Database
-                context.Add(game);
-                context.SaveChanges();
+                VideoGameDB.Add(game, context);
 
                 return RedirectToAction("Index");
             };
