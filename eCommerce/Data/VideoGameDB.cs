@@ -16,11 +16,12 @@ namespace eCommerce.Data
         /// </summary>
         /// <param name="game">The game to add</param>
         /// <param name="context">The context used</param>
-        public static VideoGame Add(VideoGame game, GameContext context)
+        public static async Task<VideoGame> AddAsync(VideoGame game, GameContext context)
         {
             // NEEDS THE CONTEXT PASSED IN AS WELL
-            context.Add(game);
-            context.SaveChanges();
+            // must add await keyword
+            await context.AddAsync(game);
+            await context.SaveChangesAsync();
             return game;
         }
     }
