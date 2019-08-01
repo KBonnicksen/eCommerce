@@ -37,5 +37,17 @@ namespace eCommerce.Data
                                                  .ToListAsync();
             return games;
         }
+
+        /// <summary>
+        /// Gets a game with a specified ID. If no game is found null is returned
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="context"></param>
+        public static async Task<VideoGame> GetGameByID(int id, GameContext context)
+        {   //Single or default async grabs a single entity from the database. If more than one item
+            //is pulled an exception is thrown
+            VideoGame g = await (context.VideoGames.Where(m => m.ID == id)).SingleOrDefaultAsync();
+            return g;
+        }
     }
 }

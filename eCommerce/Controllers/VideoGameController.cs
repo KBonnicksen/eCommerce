@@ -44,5 +44,11 @@ namespace eCommerce.Controllers
             // So that all of the errors that you encounter are sent with the view
             return View(game);
         }
+
+        public async Task<IActionResult> Update(int id)
+        {
+            VideoGame game = await VideoGameDB.GetGameByID(id, context);
+            return View(game);
+        }
     }
 }
