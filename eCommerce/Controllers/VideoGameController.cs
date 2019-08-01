@@ -17,6 +17,7 @@ namespace eCommerce.Controllers
             this.context = context;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             List<VideoGame> allGames = await VideoGameDB.GetAllGames(context);

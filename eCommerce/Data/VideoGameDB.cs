@@ -32,9 +32,6 @@ namespace eCommerce.Data
         /// <param name="context"></param>
         public static async Task<List<VideoGame>> GetAllGames(GameContext context)
         {
-            /* List<VideoGame> games = await (from vidGame in context.VideoGames
-                                      orderby vidGame.Title ascending
-                                      select vidGame).ToListAsync();*/
             List<VideoGame> games = await context.VideoGames
                                                  .OrderBy(g => g.Title)
                                                  .ToListAsync();
