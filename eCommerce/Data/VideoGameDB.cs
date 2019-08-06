@@ -49,5 +49,13 @@ namespace eCommerce.Data
             VideoGame g = await (context.VideoGames.Where(m => m.ID == id)).SingleOrDefaultAsync();
             return g;
         }
+
+        //Task<whateverYourReturnTypeIs>
+        public static async Task<VideoGame> UpdateGame(VideoGame g, GameContext context)
+        {
+            context.Update(g);
+            await context.SaveChangesAsync();
+            return g;
+        }
     }
 }
