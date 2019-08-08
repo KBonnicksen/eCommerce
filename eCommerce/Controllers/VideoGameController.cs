@@ -12,16 +12,24 @@ namespace eCommerce.Controllers
     {
         // Readonly makes it so that only the constructor can modify its value
         private readonly GameContext context;
+
         public VideoGameController(GameContext context)
         {
             this.context = context;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
+        [HttpGet] //ID is the page number coming in
+        public async Task<IActionResult> Index(int? ID)
         {
-            List<VideoGame> allGames = await VideoGameDB.GetAllGames(context);
-            return View(allGames);
+            //Set to ID. If ID is null, set to 1
+            int page = ID ?? 1;
+            const int PageSize = 3;
+            List<VideoGame> games = await VideoGameDB.GetGamesByPage(context, page, PageSize);
+
+            int totalPages = await VideoGameDB.GetTotalPages(context, PageSize);
+            ViewData["Pages"] = totalPages;
+            ViewData["CurrentPage"] = page;
+            return View(games);
         }
 
         [HttpGet]
