@@ -17,5 +17,7 @@ namespace eCommerce.Data
         }
 
         public DbSet<VideoGame> VideoGames { get; set; }
+
+        public DbSet<Member> Members { get; set; }
     }
 }
