@@ -23,7 +23,12 @@ namespace eCommerce.Controllers
         {
             //Set to ID. If ID is null, set to 1
             int page = ID ?? 1;
-            List<VideoGame> games = await VideoGameDB.GetGamesByPage(context, page, 3);
+            const int PageSize = 3;
+            List<VideoGame> games = await VideoGameDB.GetGamesByPage(context, page, PageSize);
+
+            int totalPages = await VideoGameDB.GetTotalPages(context, PageSize);
+            ViewData["Pages"] = totalPages;
+            ViewData["CurrentPage"] = page;
             return View(games);
         }
 
