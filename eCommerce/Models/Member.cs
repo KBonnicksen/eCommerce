@@ -59,4 +59,18 @@ namespace eCommerce.Models
         //Make custom attribute to make a dynamid date range
         public DateTime DateOfBirth { get; set; }
     }
+
+    /// <summary>
+    /// ViewModel for the login page
+    /// </summary>
+    public class LoginViewModel
+    {
+        [Display(Name = "Username or Email")]
+        [Required]
+        public string UserNameOrEmail { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+    }
 }
