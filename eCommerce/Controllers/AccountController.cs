@@ -34,5 +34,11 @@ namespace eCommerce.Controllers
             //How you redirect to another page!!
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
     }
 }
