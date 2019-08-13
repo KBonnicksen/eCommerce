@@ -28,7 +28,8 @@ namespace eCommerce.Controllers
         {
             await MemberDB.Add(_context, m);
 
-            TempData["Message"] = "You registered successfully";
+            TempData["Message"] = "The registration thing that you just did was a HUGE success. Go you.";
+            TempData["MessageHeader"] = "You're registered!";
 
             //How you redirect to another page!!
             return RedirectToAction("Index", "Home");

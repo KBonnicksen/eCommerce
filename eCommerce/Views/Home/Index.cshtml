@@ -2,11 +2,19 @@
     ViewData["Title"] = "Home Page";
 }
 
+@if(TempData["Message"] == null)
+{
+    TempData["Message"] = "Welcome to my game emporium. I have just about everything you would ask for.";
+    TempData["MessageHeader"] = "Hey There!";
+}
+
+
     <div class="container">
-        <div class="alert alert-dismissible alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <h4 class="alert-heading">Hey you!</h4>
-            <p class="mb-0">Thanks for visiting my site. I hope I can fill all of your video game needs! <a href="#" class="alert-link">Learn more</a>.</p>
+        <div class="alert alert-dismissible alert-success fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            <h4 class="alert-heading">@TempData["MessageHeader"]</h4>
+            <p class="mb-0" id="alert-message">@TempData["Message"]<a href="#" class="alert-link"></a></p>
         </div>
         <div class="row">
             <div class="col-md-4">
