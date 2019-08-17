@@ -24,7 +24,15 @@ namespace eCommerce
             return m;
         }
 
-        public async static Task<bool> IsLoginValid(GameContext context, LoginViewModel model)
+        /// <summary>
+        /// Checks if credentials are found in the database.
+        /// The matching member is returned for valid credentials. Null is
+        /// returned if there are no matches.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async static Task<Member> IsLoginValid(GameContext context, LoginViewModel model)
         {
             // Returns true if the member logging in is in the database
             // False if there is no record of user
@@ -32,7 +40,7 @@ namespace eCommerce
                     where( m.Username == model.UserNameOrEmail
                         || m.EmailAddress == model.UserNameOrEmail)
                         && m.Password == model.Password
-                    select m).AnyAsync();
+                    select m).SingleOrDefaultAsync();
         }
     }
 }

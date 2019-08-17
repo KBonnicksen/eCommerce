@@ -4,18 +4,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using eCommerce.Data;
 using eCommerce.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.Controllers
 {
     public class AccountController : Controller
     {
+        /// <summary>
+        /// Provides access to session data for the current user.
+        /// </summary>
+        private readonly IHttpContextAccessor _httpAccessor;
         private readonly GameContext _context;
         //Never create a new context. 
         //Make it once and then pass it around
-        public AccountController(GameContext context)
+
+        public AccountController(GameContext context, IHttpContextAccessor accessor)
         {
             _context = context;
+            _httpAccessor = accessor;
         }
 
         public IActionResult Register()
@@ -46,10 +53,16 @@ namespace eCommerce.Controllers
         {
             if (ModelState.IsValid)
             {
-                bool isMember = await MemberDB.IsLoginValid(_context, model);
-                if (isMember)
+                Member member = await MemberDB.IsLoginValid(_context, model);
+                if (member != null)
                 {
                     TempData["MessageHeader"] = "Logged in successfully.";
+
+                    //Create session for user
+                    _httpAccessor.HttpContext.Session.SetInt32("MemberID", member.MemberID);
+                    _httpAccessor.HttpContext.Session.SetString("Username", member.Username);
+
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
