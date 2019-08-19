@@ -1,5 +1,6 @@
 ﻿using eCommerce.Data;
 using eCommerce.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,25 @@ namespace eCommerce
             context.Members.Add(m);
             await context.SaveChangesAsync();
             return m;
+        }
+
+        /// <summary>
+        /// Checks if credentials are found in the database.
+        /// The matching member is returned for valid credentials. Null is
+        /// returned if there are no matches.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async static Task<Member> IsLoginValid(GameContext context, LoginViewModel model)
+        {
+            // Returns true if the member logging in is in the database
+            // False if there is no record of user
+            return await (from m in context.Members
+                    where( m.Username == model.UserNameOrEmail
+                        || m.EmailAddress == model.UserNameOrEmail)
+                        && m.Password == model.Password
+                    select m).SingleOrDefaultAsync();
         }
     }
 }
