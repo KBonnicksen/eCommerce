@@ -42,7 +42,12 @@
                         </li>
                         @if (sessionData.HttpContext.Session.GetInt32("MemberID").HasValue)
                         {
-                            <p>You are logged in</p>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Logout">Logout</a>
+                            </li>
+                            <li class="nav-item">
+                                Hello @sessionData.HttpContext.Session.GetString("Username")
+                            </li>
                         }
                         else
                         {
