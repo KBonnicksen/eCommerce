@@ -16,8 +16,6 @@ namespace eCommerce.Controllers
         /// </summary>
         private readonly IHttpContextAccessor _httpAccessor;
         private readonly GameContext _context;
-        //Never create a new context. 
-        //Make it once and then pass it around
 
         public AccountController(GameContext context, IHttpContextAccessor accessor)
         {
@@ -34,6 +32,7 @@ namespace eCommerce.Controllers
         public async Task<IActionResult> Register(Member m)
         {
             await MemberDB.Add(_context, m);
+            SessionHelper.LogUserIn(_httpAccessor, m.MemberID, m.Username);
 
             TempData["Message"] = "The registration thing that you just did was a HUGE success. Go you.";
             TempData["MessageHeader"] = "You're registered!";
@@ -56,13 +55,8 @@ namespace eCommerce.Controllers
                 Member member = await MemberDB.IsLoginValid(_context, model);
                 if (member != null)
                 {
+                    SessionHelper.LogUserIn(_httpAccessor, member.MemberID, member.Username);
                     TempData["MessageHeader"] = "Logged in successfully.";
-
-                    //Create session for user
-                    _httpAccessor.HttpContext.Session.SetInt32("MemberID", member.MemberID);
-                    _httpAccessor.HttpContext.Session.SetString("Username", member.Username);
-
-
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -76,8 +70,7 @@ namespace eCommerce.Controllers
 
         public IActionResult Logout()
         {
-            //Destroy session
-            _httpAccessor.HttpContext.Session.Clear();
+            SessionHelper.LogUserOut(_httpAccessor);
             TempData["Message"] = "You have been logged out";
             return RedirectToAction("Index", "Home");
         }
