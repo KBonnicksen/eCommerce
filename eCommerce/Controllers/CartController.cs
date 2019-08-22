@@ -30,18 +30,18 @@ namespace eCommerce.Controllers
             //Convert game to string
             string data = JsonConvert.SerializeObject(g);
 
+            CartHelper.Add(_httpAccessor, g);
+
+            return RedirectToAction("Index", "VideoGame");
             //Set up cookie
-            CookieOptions options = new CookieOptions()
-            {
-                Secure = true,
-                MaxAge = TimeSpan.FromDays(2 * DaysInWeek)
-            };
+            //CookieOptions options = new CookieOptions()
+            //{
+            //    Secure = true,
+            //    MaxAge = TimeSpan.FromDays(2 * DaysInWeek)
+            //};
 
             //THIS IS HOW YOU CREATE A COOKIE
-            _httpAccessor.HttpContext.Response.Cookies.Append("CartCookie", data, options);
-
-            //Redirect to catalog
-            return RedirectToAction("Index", "VideoGame");
+            //_httpAccessor.HttpContext.Response.Cookies.Append("CartCookie", data, options);
         }
     }
 }
