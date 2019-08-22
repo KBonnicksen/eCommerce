@@ -34,7 +34,9 @@
             <td>@Html.DisplayFor(m => g.Price)</td>
             <td>
                 <a asp-action="Update" asp-route-id="@g.ID">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@g.ID">Delete</a>
+                <a asp-action="Delete" asp-route-id="@g.ID">Delete</a> |
+                <a asp-action="Add" asp-controller="Cart" asp-route-id="@g.ID">Add to cart</a>
+
             </td>
         </tr>
         }
