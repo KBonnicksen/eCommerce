@@ -43,5 +43,12 @@ namespace eCommerce.Controllers
             //THIS IS HOW YOU CREATE A COOKIE
             //_httpAccessor.HttpContext.Response.Cookies.Append("CartCookie", data, options);
         }
+
+        public IActionResult Checkout()
+        {
+            List<VideoGame> games = CartHelper.GetGames(_httpAccessor);
+            return View(games);
+
+        }
     }
 }
