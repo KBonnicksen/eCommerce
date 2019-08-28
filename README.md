@@ -27,7 +27,7 @@ And you're all set!
 
 *Otherwise* if you are working from inside Visual Studio:
 * Choose 'Clone or checkout repository'
-* Copy andd paste the URL from this repositories home page into Visual Studios prompt box
+* Copy and paste the URL from this repositories home page into Visual Studios prompt box
 
 ## Built with
 
